@@ -5,16 +5,6 @@ const TattoocapteAccounting = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [employees, setEmployees] = useState([]);
-        
-// 🔐 Helper to persist employees in DB (CALL THIS after any change)
-const persistEmployees = async (list) => {
-  setEmployees(list);
-  await window.storage.set(
-    'tattoocapte_employees',
-    JSON.stringify(list)
-  );
-};
-
   const [transactions, setTransactions] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [startingFund, setStartingFund] = useState(0);
