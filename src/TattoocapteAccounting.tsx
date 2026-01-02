@@ -72,6 +72,7 @@ useEffect(() => {
   }, [employees, transactions, materials, startingFund, bonuses]);
 
 const handleLogin = () => {
+  // Boss login
   if (
     adminUser &&
     adminUser.username === loginForm.username &&
@@ -83,6 +84,22 @@ const handleLogin = () => {
       job: 'boss',
       isBoss: true,
       grade: 99
+    });
+    setLoginForm({ username: '', password: '' });
+    return;
+  }
+
+  // Employee login
+  const employee = employees.find(
+    emp => emp.username === loginForm.username && emp.password === loginForm.password
+  );
+
+  if (employee) {
+    setCurrentUser({
+      ...employee,
+      role: 'employee',
+      job: 'employee',
+      isBoss: false
     });
     setLoginForm({ username: '', password: '' });
   } else {
