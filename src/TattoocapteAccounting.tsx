@@ -79,15 +79,11 @@ const handleLogin = () => {
   ) {
     setCurrentUser({
       ...adminUser,
-
-      // 🔑 champs attendus par l’UI
-      role: 'patron',
-      job: 'patron',
+      role: 'boss',
+      job: 'boss',
       isBoss: true,
-      grade: 99,
-      permissions: ['all']
+      grade: 99
     });
-
     setLoginForm({ username: '', password: '' });
   } else {
     alert('Identifiants incorrects');
