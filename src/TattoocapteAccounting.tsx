@@ -5,6 +5,16 @@ const TattoocapteAccounting = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [employees, setEmployees] = useState([]);
+        
+// 🔐 Helper to persist employees in DB (CALL THIS after any change)
+const persistEmployees = async (list) => {
+  setEmployees(list);
+  await window.storage.set(
+    'tattoocapte_employees',
+    JSON.stringify(list)
+  );
+};
+
   const [transactions, setTransactions] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [startingFund, setStartingFund] = useState(0);
@@ -72,7 +82,6 @@ useEffect(() => {
   }, [employees, transactions, materials, startingFund, bonuses]);
 
 const handleLogin = () => {
-  // Boss login
   if (
     adminUser &&
     adminUser.username === loginForm.username &&
@@ -80,27 +89,15 @@ const handleLogin = () => {
   ) {
     setCurrentUser({
       ...adminUser,
-      role: 'boss',
-      job: 'boss',
+
+      // 🔑 champs attendus par l’UI
+      role: 'patron',
+      job: 'patron',
       isBoss: true,
-      grade: 99
+      grade: 99,
+      permissions: ['all']
     });
-    setLoginForm({ username: '', password: '' });
-    return;
-  }
 
-  // Employee login
-  const employee = employees.find(
-    emp => emp.username === loginForm.username && emp.password === loginForm.password
-  );
-
-  if (employee) {
-    setCurrentUser({
-      ...employee,
-      role: 'employee',
-      job: 'employee',
-      isBoss: false
-    });
     setLoginForm({ username: '', password: '' });
   } else {
     alert('Identifiants incorrects');
