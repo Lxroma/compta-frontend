@@ -71,13 +71,23 @@ useEffect(() => {
     }
   }, [employees, transactions, materials, startingFund, bonuses]);
 
-  const handleLogin = () => {
+const handleLogin = () => {
   if (
     adminUser &&
     adminUser.username === loginForm.username &&
     adminUser.password === loginForm.password
   ) {
-    setCurrentUser(adminUser);
+    setCurrentUser({
+      ...adminUser,
+
+      // 🔑 champs attendus par l’UI
+      role: 'patron',
+      job: 'patron',
+      isBoss: true,
+      grade: 99,
+      permissions: ['all']
+    });
+
     setLoginForm({ username: '', password: '' });
   } else {
     alert('Identifiants incorrects');
