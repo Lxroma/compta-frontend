@@ -14,6 +14,8 @@ const TattoocapteAccounting = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [editingFund, setEditingFund] = useState(false);
   const [tempFund, setTempFund] = useState(0);
+  const [adminUser, setAdminUser] = useState(null);
+
 
   useEffect(() => {
     loadData();
@@ -60,16 +62,18 @@ const TattoocapteAccounting = () => {
   }, [employees, transactions, materials, startingFund, bonuses]);
 
   const handleLogin = () => {
-    const user = employees.find(
-      emp => emp.username === loginForm.username && emp.password === loginForm.password
-    );
-    if (user) {
-      setCurrentUser(user);
-      setLoginForm({ username: '', password: '' });
-    } else {
-      alert('Identifiants incorrects');
-    }
-  };
+  if (
+    adminUser &&
+    adminUser.username === loginForm.username &&
+    adminUser.password === loginForm.password
+  ) {
+    setCurrentUser(adminUser);
+    setLoginForm({ username: '', password: '' });
+  } else {
+    alert('Identifiants incorrects');
+  }
+};
+
 
   const handleLogout = () => {
     setCurrentUser(null);
