@@ -15,6 +15,16 @@ const TattoocapteAccounting = () => {
   const [editingFund, setEditingFund] = useState(false);
   const [tempFund, setTempFund] = useState(0);
   const [adminUser, setAdminUser] = useState(null);
+  
+useEffect(() => {
+  const loadAdminUser = async () => {
+    const user = await window.storage.get('tattoocapte_user');
+    if (user) {
+      setAdminUser(user);
+    }
+  };
+  loadAdminUser();
+}, []);
 
 
   useEffect(() => {
